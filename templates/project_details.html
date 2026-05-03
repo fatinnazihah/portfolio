@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block title %}{{ project.title }}{% endblock %} {%
+block content %}
+<article class="project-detail">
+  <header class="detail-header">
+    <a href="{{ url_for('index') }}" class="back-link">← Back to Projects</a>
+    <h1>{{ project.title }}</h1>
+    <div class="tech-tags">
+      {% for tech in project.technologies.split(',') %}
+      <span class="tag">{{ tech.strip() }}</span>
+      {% endfor %}
+    </div>
+  </header>
+
+  {% if project.image_url %}
+  <div class="detail-image">
+    <img src="{{ project.image_url }}" alt="{{ project.title }}" />
+  </div>
+  {% endif %}
+
+  <div class="detail-content">
+    <section class="description">
+      <h2>About This Project</h2>
+      <p>{{ project.description }}</p>
+    </section>
+
+    {% if project.video_url %}
+    <section class="video-section">
+      <h2>Demo Video</h2>
+      <div class="video-container">
+        {% set video_id = project.video_url.split('v=')[-1].split('&')[0] if
+        'v=' in project.video_url else project.video_url.split('/')[-1] %}
+        <iframe
+          src="[youtube.com](https://www.youtube.com/embed/{{) video_id }}"
+          frameborder="0"
+          allowfullscreen
+        >
+        </iframe>
+      </div>
+    </section>
+    {% endif %}
+
+    <section class="project-links">
+      {% if project.github_url %}
+      <a href="{{ project.github_url }}" target="_blank" class="btn-primary">
+        View on GitHub
+      </a>
+      {% endif %} {% if project.live_url %}
+      <a href="{{ project.live_url }}" target="_blank" class="btn-secondary">
+        Live Demo
+      </a>
+      {% endif %}
+      <a href="{{ url_for('edit_project', id=project.id) }}" class="btn-edit">
+        Edit Project
+      </a>
+    </section>
+  </div>
+
+  <footer class="detail-footer">
+    <small>Added on {{ project.created_at.strftime('%B %d, %Y') }}</small>
+  </footer>
+</article>
+{% endblock %}

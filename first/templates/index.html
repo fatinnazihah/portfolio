@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevRegistry | Engineering Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+
+      :root {
+        --bg: #050505;
+        --card: #0f0f0f;
+        --border: #1f1f1f;
+        --accent: #ffffff;
+      }
+
+      body {
+        background-color: var(--bg);
+        color: #a3a3a3;
+        font-family: "Inter", sans-serif;
+        letter-spacing: -0.01em;
+      }
+
+      .glass-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        transition:
+          border-color 0.3s ease,
+          transform 0.2s ease;
+      }
+
+      .glass-card:hover {
+        border-color: #404040;
+      }
+
+      .mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      input,
+      textarea {
+        background: #000 !important;
+        border: 1px solid var(--border) !important;
+        color: #fff !important;
+        border-radius: 4px;
+        transition: border-color 0.2s ease;
+      }
+
+      input:focus,
+      textarea:focus {
+        border-color: #606060 !important;
+        outline: none;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #000;
+        font-weight: 600;
+        padding: 0.75rem;
+        border-radius: 4px;
+        transition: opacity 0.2s ease;
+      }
+
+      .btn-primary:hover {
+        opacity: 0.9;
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #222;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body class="antialiased selection:bg-white selection:text-black">
+    <div class="max-w-5xl mx-auto px-6 py-12 md:py-20">
+      <!-- HEADER -->
+      <header
+        class="mb-20 flex flex-col md:flex-row justify-between items-start md:items-center gap-6"
+      >
+        <div>
+          <h1 class="text-white text-3xl font-bold tracking-tight mb-2">
+            DevRegistry<span class="text-gray-600">.v1</span>
+          </h1>
+          <nav
+            class="flex gap-4 text-xs font-medium uppercase tracking-widest text-gray-500"
+          >
+            <span>Engineering Portfolio</span>
+            <span class="text-gray-800">/</span>
+            <span>Swinburne University</span>
+          </nav>
+        </div>
+        <div class="flex flex-col items-end">
+          <div class="flex items-center gap-2">
+            <span
+              class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"
+            ></span>
+            <span
+              class="mono text-[10px] text-gray-400 uppercase tracking-tighter"
+              >Network: Render-Cloud-Production</span
+            >
+          </div>
+          <span class="mono text-[10px] text-gray-600 uppercase"
+            >PostgreSQL: Instance_Active</span
+          >
+        </div>
+      </header>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+        <!-- FORM SECTION (The Tool) -->
+        <div class="lg:col-span-4">
+          <div class="sticky top-12">
+            <h2
+              class="text-white text-sm font-semibold uppercase tracking-widest mb-6"
+            >
+              Entry Management
+            </h2>
+            <form action="/add-project" method="post" class="space-y-5">
+              <div class="space-y-1">
+                <label class="text-[10px] uppercase font-bold text-gray-600"
+                  >Identifier</label
+                >
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Project Name"
+                  class="w-full text-sm p-3"
+                  required
+                />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] uppercase font-bold text-gray-600"
+                  >Stack</label
+                >
+                <input
+                  type="text"
+                  name="tech_stack"
+                  placeholder="e.g. AWS, FastAPI, Docker"
+                  class="w-full text-sm p-3"
+                />
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] uppercase font-bold text-gray-600"
+                  >Brief</label
+                >
+                <textarea
+                  name="description"
+                  placeholder="Technical summary..."
+                  class="w-full text-sm p-3 h-28 resize-none"
+                  required
+                ></textarea>
+              </div>
+              <div class="space-y-1">
+                <label class="text-[10px] uppercase font-bold text-gray-600"
+                  >Asset URL</label
+                >
+                <input
+                  type="url"
+                  name="video_url"
+                  placeholder="YouTube or Image Link"
+                  class="w-full text-sm p-3"
+                />
+              </div>
+              <button
+                type="submit"
+                class="btn-primary w-full text-sm uppercase tracking-widest"
+              >
+                Commit Entry
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- PROJECTS FEED (The Showcase) -->
+        <div class="lg:col-span-8">
+          <h2
+            class="text-white text-sm font-semibold uppercase tracking-widest mb-6"
+          >
+            Archive Feed
+          </h2>
+          <div class="space-y-10">
+            {% for project in projects %}
+            <article class="glass-card p-6 rounded-sm group">
+              <div class="flex justify-between items-start mb-4">
+                <h3 class="text-white text-xl font-semibold">
+                  {{ project.title }}
+                </h3>
+                <span
+                  class="mono text-[10px] border border-gray-800 px-2 py-1 text-gray-400 group-hover:border-gray-600 transition-colors"
+                >
+                  {{ project.tech_stack }}
+                </span>
+              </div>
+
+              {% if project.video_url %}
+              <div class="mb-6 overflow-hidden rounded-sm bg-black">
+                <iframe
+                  class="w-full aspect-video opacity-80 group-hover:opacity-100 transition-opacity"
+                  src="{{ project.video_url }}"
+                  frameborder="0"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              {% endif %}
+
+              <p class="text-gray-400 text-sm leading-relaxed max-w-2xl">
+                {{ project.description }}
+              </p>
+            </article>
+            {% endfor %} {% if not projects %}
+            <div
+              class="py-20 text-center border border-dashed border-gray-900 rounded-sm"
+            >
+              <p class="mono text-xs text-gray-700 uppercase">
+                Registry empty // Awaiting first commit
+              </p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <footer
+        class="mt-32 pt-8 border-t border-gray-900 flex justify-between items-center text-[10px] mono text-gray-700 uppercase tracking-widest"
+      >
+        <span>&copy; 2026 Engineering Portfolio</span>
+        <span>Ref: SWE40006_DEPLOYMENT_3</span>
+      </footer>
+    </div>
+  </body>
+</html>

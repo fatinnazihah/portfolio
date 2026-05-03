@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}My Portfolio{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="preconnect"
+      href="[fonts.googleapis.com](https://fonts.googleapis.com)"
+    />
+    <link
+      href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap)"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="{{ url_for('index') }}" class="logo">Portfolio</a>
+        <div class="nav-links">
+          <a href="{{ url_for('index') }}">Projects</a>
+          <a href="{{ url_for('add_project') }}" class="btn-nav"
+            >+ Add Project</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="alert alert-{{ category }}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2025 My Portfolio. Built with Flask & PostgreSQL on Render.</p>
+    </footer>
+  </body>
+</html>
