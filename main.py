@@ -38,7 +38,11 @@ def get_db():
 @app.get("/")
 def home(request: Request, db: Session = Depends(get_db)):
     projects = db.query(Project).order_by(Project.id.desc()).all()
-    return templates.TemplateResponse("index.html", {"request": request, "projects": projects})
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={"projects": projects}
+    )
 
 @app.post("/add-project")
 def add_project(
