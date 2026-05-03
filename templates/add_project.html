@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ 'Edit' if edit else 'Add' }} Project{% endblock %}
+
+{% block content %}
+<section class="form-section">
+    <h1>{{ 'Edit' if edit else 'Add New' }} Project</h1>
+    
+    <form method="POST" class="project-form">
+        <div class="form-group">
+            <label for="title">Project Title *</label>
+            <input type="text" id="title" name="title" required 
+                   value="{{ project.title if project else '' }}" 
+                   placeholder="My Awesome Project">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description *</label>
+            <textarea id="description" name="description" rows="5" required 
+                      placeholder="Describe your project...">{{ project.description if project else '' }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="image_url">Image URL</label>
+            <input type="url" id="image_url" name="image_url" 
+                   value="{{ project.image_url if project else '' }}"
+                   placeholder="[example.com](https://example.com/image.jpg)">
+            <small>Link to a project screenshot or thumbnail</small>
+        </div>
+
+        <div class="form-group">
+            <label for="video_url">Video URL (YouTube)</label>
+            <input type="url" id="video_url" name="video_url" 
+                   value="{{ project.video_url if project else '' }}"
+                   placeholder="[youtube.com](https://www.youtube.com/watch?v=)">
+        </div>
+
+        <div class="form-group">
+            <label for="technologies">Technologies Used</label>
+            <input type="text" id="technologies" name="technologies" 
+                   value="{{ project.technologies if project else '' }}"
+                   placeholder="Python, Flask, PostgreSQL, React">
+            <small>Comma-separated list</small>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="github_url">GitHub URL</label>
+                <input type="url" id="github_url" name="github_url" 
+                       value="{{ project.github_url if project else '' }}"
+                       placeholder="[github.com](https://github.com/)">
+            </div>
+
+            <div class="form-group">
+                <label for="live_url">Live Demo URL</label>
+                <input type="url" id="live_url" name="live_url" 
+                       value="{{ project.live_url if project else '' }}"
+                       placeholder="[myproject.com](https://myproject.com)">
+            </div>
+        </div>
+
+        <div class="form-group checkbox-group">
+            <label>
+                <input type="checkbox" name="featured" 
+                       {{ 'checked' if project and project.featured else '' }}>
+                Feature this project on homepage
+            </label>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-primary">
+                {{ 'Update' if edit else 'Add' }} Project
+            </button>
+            <a href="{{ url_for('index') }}" class="btn-secondary">Cancel</a>
+            
+            {% if edit %}
+            <form method="POST" action="{{ url_for('delete_project', id=project.id) }}" 
+                  style="display: inline;" 
+                  onsubmit="return confirm('Are you sure you want to delete this project?');">
+                <button type="submit" class="btn-danger">Delete</button>
+            </form>
+            {% endif %}
+        </div>
+    </form>
+</section>
+{% endblock %}
