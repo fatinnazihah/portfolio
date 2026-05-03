@@ -14,18 +14,18 @@
     <div
       class="aspect-video bg-gray-900 overflow-hidden mb-4 border border-gray-800 transition-all group-hover:border-gray-500"
     >
-      <!-- Placeholder for project video or image -->
-      {% if project.thumbnail %}
+      <!-- Fixed logic: checking for image_url instead of thumbnail -->
+      {% if project.image_url %}
       <img
-        src="{{ project.thumbnail }}"
+        src="{{ project.image_url }}"
         alt="{{ project.title }}"
         class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
       />
       {% else %}
       <div
-        class="w-full h-full flex items-center justify-center text-gray-700 text-xs tracking-tighter"
+        class="w-full h-full flex items-center justify-center text-gray-700 text-xs tracking-tighter uppercase"
       >
-        PREVIEW_NOT_FOUND
+        Preview_Not_Found
       </div>
       {% endif %}
     </div>
@@ -34,7 +34,11 @@
     >
       {{ project.title }}
     </h2>
-    <p class="text-sm text-gray-500 mt-1 line-clamp-2">
+    <!-- Using technologies field for the tags -->
+    <p class="text-xs text-gray-600 mt-1 uppercase tracking-widest">
+      {{ project.technologies }}
+    </p>
+    <p class="text-sm text-gray-500 mt-2 line-clamp-2">
       {{ project.description }}
     </p>
   </a>
