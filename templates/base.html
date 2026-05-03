@@ -3,42 +3,60 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}My Portfolio{% endblock %}</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css') }}"
-    />
-    <link
-      rel="preconnect"
-      href="[fonts.googleapis.com](https://fonts.googleapis.com)"
-    />
-    <link
-      href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap)"
-      rel="stylesheet"
-    />
+    <title>Portfolio | Lead Frontend Dev</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style type="text/css">
+      /* Custom scrollbar to match minimalist dark theme */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1a1a1a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #444;
+      }
+    </style>
   </head>
-  <body>
-    <nav class="navbar">
-      <div class="nav-container">
-        <a href="{{ url_for('index') }}" class="logo">Portfolio</a>
-        <div class="nav-links">
-          <a href="{{ url_for('index') }}">Projects</a>
-          <a href="{{ url_for('add_project') }}" class="btn-nav"
-            >+ Add Project</a
+  <body
+    class="bg-black text-gray-300 font-sans selection:bg-white selection:text-black"
+  >
+    <!-- Navigation -->
+    <nav class="border-b border-gray-800 py-6">
+      <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
+        <a
+          href="/"
+          class="text-xl font-bold tracking-tighter text-white hover:opacity-80 transition-opacity"
+        >
+          PORTFOLIO_
+        </a>
+        <div class="space-x-8 text-sm uppercase tracking-widest">
+          <a href="/" class="hover:text-white transition-colors">Projects</a>
+          <a
+            href="/add"
+            class="hover:text-white transition-colors text-gray-500"
+            >Admin</a
           >
         </div>
       </div>
     </nav>
 
-    <main class="container">
-      {% with messages = get_flashed_messages(with_categories=true) %} {% if
-      messages %} {% for category, message in messages %}
-      <div class="alert alert-{{ category }}">{{ message }}</div>
-      {% endfor %} {% endif %} {% endwith %} {% block content %}{% endblock %}
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 py-12">
+      {% block content %}{% endblock %}
     </main>
 
-    <footer class="footer">
-      <p>&copy; 2025 My Portfolio. Built with Flask & PostgreSQL on Render.</p>
+    <footer class="border-t border-gray-900 py-12 mt-12">
+      <div
+        class="max-w-5xl mx-auto px-4 text-center text-xs text-gray-600 uppercase tracking-widest"
+      >
+        &copy; 2026 | Swinburne University of Technology Sarawak
+      </div>
     </footer>
   </body>
 </html>

@@ -1,84 +1,43 @@
-{% extends 'base.html' %} {% block content %}
-<section class="hero">
-  <h1>Hi, I'm <span class="highlight">Your Name</span></h1>
-  <p class="tagline">Software Developer | Building cool stuff</p>
-</section>
+{% extends "base.html" %} {% block content %}
+<header class="mb-16">
+  <h1 class="text-4xl font-bold text-white mb-4 tracking-tight">
+    Selected Works
+  </h1>
+  <p class="text-gray-500 max-w-2xl">
+    Full-stack engineering and DevOps focus.
+  </p>
+</header>
 
-{% if featured %}
-<section class="featured-section">
-  <h2>Featured Project</h2>
-  <div class="featured-card">
-    {% if featured.image_url %}
-    <img
-      src="{{ featured.image_url }}"
-      alt="{{ featured.title }}"
-      class="featured-image"
-    />
-    {% endif %}
-    <div class="featured-content">
-      <h3>{{ featured.title }}</h3>
-      <p>
-        {{ featured.description[:200] }}{% if featured.description|length > 200
-        %}...{% endif %}
-      </p>
-      <div class="tech-tags">
-        {% for tech in featured.technologies.split(',') %}
-        <span class="tag">{{ tech.strip() }}</span>
-        {% endfor %}
-      </div>
-      <a
-        href="{{ url_for('project_detail', id=featured.id) }}"
-        class="btn-primary"
-        >View Project</a
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+  {% for project in projects %}
+  <a href="/project/{{ project.id }}" class="group block">
+    <div
+      class="aspect-video bg-gray-900 overflow-hidden mb-4 border border-gray-800 transition-all group-hover:border-gray-500"
+    >
+      <!-- Placeholder for project video or image -->
+      {% if project.thumbnail %}
+      <img
+        src="{{ project.thumbnail }}"
+        alt="{{ project.title }}"
+        class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+      />
+      {% else %}
+      <div
+        class="w-full h-full flex items-center justify-center text-gray-700 text-xs tracking-tighter"
       >
-    </div>
-  </div>
-</section>
-{% endif %}
-
-<section class="projects-section">
-  <h2>All Projects</h2>
-  {% if projects %}
-  <div class="projects-grid">
-    {% for project in projects %}
-    <article class="project-card">
-      {% if project.image_url %}
-      <div class="card-image">
-        <img src="{{ project.image_url }}" alt="{{ project.title }}" />
+        PREVIEW_NOT_FOUND
       </div>
       {% endif %}
-      <div class="card-content">
-        <h3>{{ project.title }}</h3>
-        <p>
-          {{ project.description[:100] }}{% if project.description|length > 100
-          %}...{% endif %}
-        </p>
-        <div class="tech-tags">
-          {% for tech in project.technologies.split(',')[:3] %}
-          <span class="tag">{{ tech.strip() }}</span>
-          {% endfor %}
-        </div>
-        <div class="card-actions">
-          <a
-            href="{{ url_for('project_detail', id=project.id) }}"
-            class="btn-secondary"
-            >Details</a
-          >
-          <a
-            href="{{ url_for('edit_project', id=project.id) }}"
-            class="btn-edit"
-            >Edit</a
-          >
-        </div>
-      </div>
-    </article>
-    {% endfor %}
-  </div>
-  {% else %}
-  <div class="empty-state">
-    <p>No projects yet. Add your first project!</p>
-    <a href="{{ url_for('add_project') }}" class="btn-primary">+ Add Project</a>
-  </div>
-  {% endif %}
-</section>
+    </div>
+    <h2
+      class="text-lg font-medium text-white group-hover:underline decoration-1 underline-offset-4"
+    >
+      {{ project.title }}
+    </h2>
+    <p class="text-sm text-gray-500 mt-1 line-clamp-2">
+      {{ project.description }}
+    </p>
+  </a>
+  {% endfor %}
+</div>
 {% endblock %}
