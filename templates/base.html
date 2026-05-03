@@ -51,11 +51,39 @@
       {% block content %}{% endblock %}
     </main>
 
-    <footer class="border-t border-gray-900 py-12 mt-12">
+    <!-- Replace the existing footer in base.html with this -->
+    <footer class="border-t border-gray-900 py-16 mt-12">
       <div
-        class="max-w-5xl mx-auto px-4 text-center text-xs text-gray-600 uppercase tracking-widest"
+        class="max-w-5xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8"
       >
-        &copy; 2026 | Swinburne University of Technology Sarawak
+        <div
+          class="text-xs text-gray-600 uppercase tracking-widest text-center md:text-left"
+        >
+          &copy; 2026 | Swinburne University of Technology Sarawak
+        </div>
+
+        <!-- Professional Links -->
+        <div
+          class="flex gap-8 text-[10px] uppercase tracking-[0.2em] text-gray-400"
+        >
+          <a
+            href="https://github.com/yourusername"
+            target="_blank"
+            class="hover:text-white transition-colors"
+            >GitHub</a
+          >
+          <a
+            href="https://linkedin.com/in/yourusername"
+            target="_blank"
+            class="hover:text-white transition-colors"
+            >LinkedIn</a
+          >
+          <a
+            href="mailto:your.email@example.com"
+            class="hover:text-white transition-colors"
+            >Contact</a
+          >
+        </div>
       </div>
     </footer>
   </body>

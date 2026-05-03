@@ -6,30 +6,79 @@
     >← Back to index</a
   >
 
-  <h1 class="text-5xl font-bold text-white mb-6 tracking-tighter">
+  <h1 class="text-5xl font-bold text-white mb-4 tracking-tighter">
     {{ project.title }}
   </h1>
 
+  <!-- Action Links -->
+  <div class="flex flex-wrap gap-4 mb-8">
+    {% if project.github_url %}
+    <a
+      href="{{ project.github_url }}"
+      target="_blank"
+      class="flex items-center gap-2 text-xs uppercase tracking-widest text-white border border-gray-800 px-4 py-2 hover:bg-white hover:text-black transition-all"
+    >
+      GitHub Source
+    </a>
+    {% endif %} {% if project.video_url %}
+    <a
+      href="{{ project.video_url }}"
+      target="_blank"
+      class="flex items-center gap-2 text-xs uppercase tracking-widest text-white border border-gray-800 px-4 py-2 hover:bg-white hover:text-black transition-all"
+    >
+      YouTube Demo
+    </a>
+    {% endif %} {% if project.live_url %}
+    <a
+      href="{{ project.live_url }}"
+      target="_blank"
+      class="flex items-center gap-2 text-xs uppercase tracking-widest bg-white text-black px-4 py-2 hover:bg-gray-200 transition-all"
+    >
+      View Live Site
+    </a>
+    {% endif %}
+  </div>
+
   <div class="flex flex-wrap gap-2 mb-12">
-    {% for tag in project.tags.split(',') %}
+    {% if project.technologies %} {% for tag in project.technologies.split(',')
+    %}
     <span
       class="px-3 py-1 bg-gray-900 border border-gray-800 text-[10px] text-gray-400 uppercase tracking-widest"
       >{{ tag.strip() }}</span
     >
-    {% endfor %}
+    {% endfor %} {% endif %}
   </div>
 
-  <!-- Project Video/Content -->
+  <!-- Media Section -->
   <div
-    class="bg-gray-900 aspect-video mb-12 border border-gray-800 flex items-center justify-center"
+    class="bg-gray-900 aspect-video mb-12 border border-gray-800 flex items-center justify-center overflow-hidden"
   >
+    {% if project.video_url and 'youtube.com' in project.video_url %}
+    <!-- Simple YouTube Embed if link is available -->
+    <iframe
+      class="w-full h-full"
+      src="{{ project.video_url.replace('watch?v=', 'embed/') }}"
+      frameborder="0"
+      allowfullscreen
+    ></iframe>
+    {% elif project.image_url %}
+    <img
+      src="{{ project.image_url }}"
+      class="w-full h-full object-cover grayscale"
+    />
+    {% else %}
     <span class="text-gray-700 uppercase tracking-widest text-xs"
-      >Project Video Player</span
+      >No Preview Available</span
     >
+    {% endif %}
   </div>
 
-  <div class="prose prose-invert max-w-none">
-    <h3 class="text-white text-lg font-semibold mb-4">Overview</h3>
+  <div class="prose prose-invert max-w-none pb-20">
+    <h3
+      class="text-white text-lg font-semibold mb-4 underline decoration-gray-700 underline-offset-8"
+    >
+      Overview
+    </h3>
     <p class="text-gray-400 leading-relaxed">{{ project.description }}</p>
   </div>
 </div>
